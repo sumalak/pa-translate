@@ -18,8 +18,6 @@ as the name is changed.
 
 '''
 
-# https://gomputor.wordpress.com/2008/09/27/search-replace-multiple-words-or-characters-with-python/
-
 import argparse
 
 #iso8859_replacement = u"ÀÁÂÃÄÅ°ÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß"
@@ -47,19 +45,21 @@ def replace_all(text, dic):
 # Pre-part l_ mean that variable is mine
 
 l_Parser = argparse.ArgumentParser()
-l_Parser.add_argument("input")
+l_Parser.add_argument("input_file")
 l_Args = l_Parser.parse_args()
 
-print replace_all(l_Args.input.decode("utf-8"), dictionary)
+l_File_In = open(l_Args.input_file)
+l_File_Out = open("base-language.txt.custom", "w")
 
-#l_File_In = open(l_Args.input)
+l_File_Out.write("\xef\xbb\xbf\r\n")
 
+for entry in l_File_In:
+    #for i, j in dictionary.iteritems():
+    #    entry = entry.decode("utf-8").replace(i, j)
+    l_File_Out.write(replace_all(entry.decode("utf-8"), dictionary).encode("utf-8"))
 
-#print replace_all(l_File_In.read, dictionary)
-
-
-#l_File_In.close()
-
+l_File_In.close()
+l_File_Out.close()
 
 
 

@@ -27,13 +27,22 @@ l_Parser = argparse.ArgumentParser()
 l_Parser.add_argument("input_file")
 l_Args = l_Parser.parse_args()
 
-l_File_Out = open("base-language.txt.new", "w")
+l_File_Out = open("base-language.txt.native", "w")
 l_File_In = polib.pofile(l_Args.input_file)
 
 for entry in l_File_In:
     if entry.msgstr:
-        print type(entry.msgctxt.ljust(53)), type(entry.msgstr)
+        l_File_Out.write(entry.msgctxt.ljust(53).encode("utf-8") + entry.msgstr.encode("utf-8") + "\r\n")
     else:
-        print type(entry.msgctxt.ljust(53)), type(entry.msgid)
+        l_File_Out.write(entry.msgctxt.ljust(53).encode("utf-8") + entry.msgid.encode("utf-8") + "\r\n")
 
 l_File_Out.close()
+
+
+
+
+
+
+
+
+

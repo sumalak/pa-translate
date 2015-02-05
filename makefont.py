@@ -86,14 +86,15 @@ row11 = u" ¡¢£¤¥¦§¨©ª«¬­®¯"
 row12 = u"Ёё²³´µ¶·¸¹º»¼½¾¿" # My representation of lower part of codepage
 row13 = u"АБВГДЕЖЗИЙКЛМНОП" # ISO 8859-5 with only russian letters.
 row14 = u"РСТУФХЦЧШЩЪЫЬЭЮЯ" # Actually its not that codepage
-row15 = u"абвгдежзийкдмноп"
+row15 = u"абвгдежзийклмноп"
 row16 = u"рстуфхцчшщъыьэюя"
 
 string = row1 + row2 + row3 + row4 + row5 + row6 + row7 + row8
 string = string + row9 + row10 + row11 + row12 + row13 + row14 + row15 + row16
 
-paint_font_grid('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', string, "font.bmp")
-paint_font_grid('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', string, "font-bold.bmp")
+paint_font_grid('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', string, "catalogue.bmp")
+paint_font_grid('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', string, "verdana.bmp")
+paint_font_grid('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', string, "verdana-bold.bmp")
 
 
 
