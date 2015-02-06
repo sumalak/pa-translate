@@ -10,7 +10,7 @@ With these tools you can make your own translation more easily without much hand
 4. Replace existing russian characters with your native language characters and replace font paths.
 5. Run: python makefont.py
 6. Replace original game fonts.
-7. Download ready to use translated prison_architect.po files from [Prison Architect translation project on Zanata.org][zanata]. You may be need to sign up and HELP translate game to your native language.
+7. Download ready to use translated prison_architect.po files from [Prison Architect translation project on Zanata.org][zanata]. You may be need to [sign up](http://zanata.org/help/accounts/sign-up/), [join a language](http://zanata.org/help/translation/translator-add/) and HELP translate game to your native language (you can contact [David Mason](https://github.com/davidmason/) on Zanata team if you need help).
 8. Run: python po2prison.py prison_architect.po
 9. Open in editor native2custom.py.
 10. Replace existing russian characters with your native language characters according to makefont.py.
