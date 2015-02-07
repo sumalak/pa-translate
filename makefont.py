@@ -22,8 +22,10 @@ as the name is changed.
 
 # Following string variables represent ISO 8859-1 Latin codepage with replaced characters in row12, row13, row14, row15, row16 (i didnt find all original characters in internets).
 
-row1 =  u" ┌┐└┘│─    ♂♀ ♬☼"
-row2 =  u"┼◀↕‼ ┴┬┤↑├→←    "
+#row1 =  u" ┌┐└┘│─    ♂♀ ♬☼" # Temporarily removed by reason of overriding nearby character spaces by some characters
+#row2 =  u"┼◀↕‼ ┴┬┤↑├→←    "
+row1 =  u"           ♂♀ ♬☼"
+row2 =  u" ◀↕‼    ↑ →←    "
 row3 =  u" !\"#$%&\'()*+,-./"
 row4 =  u"0123456789:;<=>?"
 row5 =  u"@ABCDEFGHIJKLMNO"
@@ -47,10 +49,10 @@ def paint_font_grid(input_string, font_path, output_file):
     image_height = 1024
     cell_width = image_width / 16       # 64
     cell_height = image_height / 16     # 64
-    bg_color = (0, 0, 0)
+    bg_color = 0
 
     my_truetype_font = ImageFont.truetype(font_path, 52)
-    my_image = Image.new('RGB', (image_width, image_height), bg_color)
+    my_image = Image.new('L', (image_width, image_height), bg_color)
     my_draw = ImageDraw.Draw(my_image)
 
     row = 1 # Starting coordinates of drawing
@@ -62,7 +64,7 @@ def paint_font_grid(input_string, font_path, output_file):
         symbol_width, symbol_height = my_draw.textsize(symbol, font=my_truetype_font)
         text_x = ((cell_width - symbol_width) / 2) + col * 64 - 64
         text_y = (row * 64) - 60
-        my_draw.text((text_x, text_y), symbol, font=my_truetype_font)
+        my_draw.text((text_x, text_y), symbol, 255, my_truetype_font)
         '''
         # For testing purpose
         
@@ -70,15 +72,15 @@ def paint_font_grid(input_string, font_path, output_file):
                                    symbol_height,
                                    cell_width,
                                    cell_height)
-
+        
         # This part draw borders to test aligments
         
         rect_x1 = 64 * col - 64
         rect_y1 = 64 * row - 64
         rect_x2 = 64 * col - 1
         rect_y2 = 64 * row - 1
-        l_Draw.rectangle([rect_x1, rect_y1, rect_x2, rect_y2],
-                         outline = (255,255,255))
+        my_draw.rectangle([rect_x1, rect_y1, rect_x2, rect_y2],
+                         outline = 255)
         '''
         if col == 16:
             col = 1
