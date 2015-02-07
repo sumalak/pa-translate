@@ -18,30 +18,51 @@ as the name is changed.
 
 '''
 
+#row11 = u" " * 176          # Offset (ASCII + 3 lines)
+
+# Following string variables represent ISO 8859-1 Latin codepage with replaced characters in row12, row13, row14, row15, row16 (i didnt find all original characters in internets).
+
+row1 =  u" ┌┐└┘│─    ♂♀ ♬☼"
+row2 =  u"┼◀↕‼ ┴┬┤↑├→←    "
+row3 =  u" !\"#$%&\'()*+,-./"
+row4 =  u"0123456789:;<=>?"
+row5 =  u"@ABCDEFGHIJKLMNO"
+row6 =  u"PQRSTUVWXYZ[\\]^_"
+row7 =  u"`abcdefghijklmno"
+row8 =  u"pqrstuvwxyz{|}~ "
+row9 =  u"€ ‚ƒ„…†‡ˆ‰Š‹Œ Ž "
+row10 = u" ‘’“”•–—˜™š›œ žŸ"
+row11 = u" ¡¢£¤¥¦§¨©ª«¬­®¯"
+row12 = u"Ёё²³´µ¶·¸¹º»¼½¾¿"
+row13 = u"АБВГДЕЖЗИЙКЛМНОП"
+row14 = u"РСТУФХЦЧШЩЪЫЬЭЮЯ"
+row15 = u"абвгдежзийклмноп"
+row16 = u"рстуфхцчшщъыьэюя"
+
 from PIL import Image, ImageDraw, ImageFont
 
-def paint_font_grid(font_type, input_string, output_file):
+def paint_font_grid(input_string, font_path, output_file):
 
-    image_width = 1024                  # 1024
-    image_height = 1024                 # 1024
+    image_width = 1024
+    image_height = 1024
     cell_width = image_width / 16       # 64
     cell_height = image_height / 16     # 64
-    bg_color = (0, 0, 0)                # Black (nigga)
+    bg_color = (0, 0, 0)
 
-    l_TrueType = ImageFont.truetype(font_type, 52)
-    l_Image = Image.new('RGB', (image_width, image_height), bg_color)
-    l_Draw = ImageDraw.Draw(l_Image)
+    my_truetype_font = ImageFont.truetype(font_path, 52)
+    my_image = Image.new('RGB', (image_width, image_height), bg_color)
+    my_draw = ImageDraw.Draw(my_image)
 
-    row = 1     # Starting coordinates of drawing
+    row = 1 # Starting coordinates of drawing
     col = 1
 
-    # This draws each symbol in 64x64 pixel cell aligned center
+    # This draw each symbol in grid of cells and aligned center of cell. Each cell size is 64x64 pixels
 
     for symbol in string:
-        symbol_width, symbol_height = l_Draw.textsize(symbol, font=l_TrueType)
+        symbol_width, symbol_height = my_draw.textsize(symbol, font=my_truetype_font)
         text_x = ((cell_width - symbol_width) / 2) + col * 64 - 64
         text_y = (row * 64) - 60
-        l_Draw.text((text_x, text_y), symbol, font=l_TrueType)
+        my_draw.text((text_x, text_y), symbol, font=my_truetype_font)
         '''
         # For testing purpose
         
@@ -50,7 +71,7 @@ def paint_font_grid(font_type, input_string, output_file):
                                    cell_width,
                                    cell_height)
 
-        # This part draw borders for testing aligment
+        # This part draw borders to test aligments
         
         rect_x1 = 64 * col - 64
         rect_y1 = 64 * row - 64
@@ -67,34 +88,15 @@ def paint_font_grid(font_type, input_string, output_file):
 
     #l_Image.show()         # For testing purpose
 
-    l_Image.save(output_file)
+    my_image.save(output_file)
 
-#row11 = u" " * 176          # Offset (ASCII + 3 lines)
 
-row1 = u" ┌┐└┘│─    ♂♀ ♬☼"
-row2 = u"┼◀↕‼ ┴┬┤↑├→←    "
-row3 = u" !\"#$%&\'()*+,-./"
-row4 = u"0123456789:;<=>?"
-row5 = u"@ABCDEFGHIJKLMNO"
-row6 = u"PQRSTUVWXYZ[\\]^_"
-row7 = u"`abcdefghijklmno"
-row8 = u"pqrstuvwxyz{|}~ "
-row9 = u"€ ‚ƒ„…†‡ˆ‰Š‹Œ Ž "
-row10 = u" ‘’“”•–—˜™š›œ žŸ"
-row11 = u" ¡¢£¤¥¦§¨©ª«¬­®¯"
-#old12 = u"°±²³´µ¶·¸¹º»¼½¾¿"
-row12 = u"Ёё²³´µ¶·¸¹º»¼½¾¿" # My representation of lower part of codepage
-row13 = u"АБВГДЕЖЗИЙКЛМНОП" # ISO 8859-5 with only russian letters.
-row14 = u"РСТУФХЦЧШЩЪЫЬЭЮЯ" # Actually its not that codepage
-row15 = u"абвгдежзийклмноп"
-row16 = u"рстуфхцчшщъыьэюя"
 
-string = row1 + row2 + row3 + row4 + row5 + row6 + row7 + row8
-string = string + row9 + row10 + row11 + row12 + row13 + row14 + row15 + row16
+string = row1 + row2 + row3 + row4 + row5 + row6 + row7 + row8 + row9 + row10 + row11 + row12 + row13 + row14 + row15 + row16
 
-paint_font_grid('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', string, "catalogue.bmp")
-paint_font_grid('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', string, "verdana.bmp")
-paint_font_grid('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', string, "verdana-bold.bmp")
+paint_font_grid(string, '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', "catalogue.bmp")
+paint_font_grid(string, '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', "verdana.bmp")
+paint_font_grid(string, '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', "verdana-bold.bmp")
 
 
 
