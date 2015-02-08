@@ -18,12 +18,15 @@ as the name is changed.
 
 '''
 
+# Version 0.0.2
+
 #row11 = u" " * 176          # Offset (ASCII + 3 lines)
 
 # Following string variables represent ISO 8859-1 Latin codepage with replaced characters in row12, row13, row14, row15, row16 (i didnt find all original characters in internets).
 
 #row1 =  u" ┌┐└┘│─    ♂♀ ♬☼" # Temporarily removed by reason of overriding nearby character spaces by some characters
 #row2 =  u"┼◀↕‼ ┴┬┤↑├→←    "
+
 row1 =  u"           ♂♀ ♬☼"
 row2 =  u" ◀↕‼    ↑ →←    "
 row3 =  u" !\"#$%&\'()*+,-./"
@@ -43,28 +46,34 @@ row16 = u"рстуфхцчшщъыьэюя"
 
 from PIL import Image, ImageDraw, ImageFont
 
-def paint_font_grid(input_string, font_path, output_file):
+def paint_font_grid(input_string, font_path, output_file, image_mode):
 
     image_width = 1024
     image_height = 1024
-    cell_width = image_width / 16       # 64
-    cell_height = image_height / 16     # 64
+    cell_width = image_width / 16   # 64
+    cell_height = image_height / 16 # 64
     bg_color = 0
+    text_color = 255
 
     my_truetype_font = ImageFont.truetype(font_path, 52)
-    my_image = Image.new('L', (image_width, image_height), bg_color)
+    my_image = Image.new(image_mode, (image_width, image_height), bg_color)
     my_draw = ImageDraw.Draw(my_image)
 
     row = 1 # Starting coordinates of drawing
     col = 1
 
-    # This draw each symbol in grid of cells and aligned center of cell. Each cell size is 64x64 pixels
+    # This draw each symbol in grid
 
-    for symbol in string:
-        symbol_width, symbol_height = my_draw.textsize(symbol, font=my_truetype_font)
+    for position in xrange(256):
+
+        # Aligned to center coordinates
+
+        symbol_width, symbol_height = my_draw.textsize(input_string[position], my_truetype_font)
         text_x = ((cell_width - symbol_width) / 2) + col * 64 - 64
         text_y = (row * 64) - 60
-        my_draw.text((text_x, text_y), symbol, 255, my_truetype_font)
+
+        my_draw.text((text_x, text_y), input_string[position], text_color, my_truetype_font)
+
         '''
         # For testing purpose
         
@@ -82,26 +91,28 @@ def paint_font_grid(input_string, font_path, output_file):
         my_draw.rectangle([rect_x1, rect_y1, rect_x2, rect_y2],
                          outline = 255)
         '''
+
         if col == 16:
             col = 1
             row = row + 1
         else:
             col = col + 1
 
-    #l_Image.show()         # For testing purpose
+    #my_image.show() # For testing purpose
 
-    my_image.save(output_file)
-
-
+    if output_file == "verdana-bold-outlined.png":
+        my_image.save(output_file, transparency=0)
+    else:
+        my_image.save(output_file)
 
 string = row1 + row2 + row3 + row4 + row5 + row6 + row7 + row8 + row9 + row10 + row11 + row12 + row13 + row14 + row15 + row16
 
-paint_font_grid(string, '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', "catalogue.bmp")
-paint_font_grid(string, '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', "verdana.bmp")
-paint_font_grid(string, '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', "verdana-bold.bmp")
+paint_font_grid(string, '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', "catalogue.bmp", "L")
+paint_font_grid(string, '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', "verdana.bmp", "L")
+paint_font_grid(string, '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', "verdana-bold.bmp", "L")
+paint_font_grid(string, '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', "verdana-bold-outlined.png", "L") # Python PIL library dont support alpha channel for BMP format
 
-
-
+# Code remains
 
 '''
 

@@ -18,6 +18,8 @@ as the name is changed.
 
 '''
 
+# Version 0.0.2
+
 import argparse
 import polib
 
