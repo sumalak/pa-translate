@@ -18,33 +18,38 @@ as the name is changed.
 
 '''
 
-# Version 0.0.2
+# Version 0.0.3
 
-#row11 = u" " * 176          # Offset (ASCII + 3 lines)
+# This is Prison Architect version of ISO 8859-1 Latin codepage
 
-# Following string variables represent ISO 8859-1 Latin codepage with replaced characters in row12, row13, row14, row15, row16 (i didnt find all original characters in internets).
+'''
+# Those temporarily removed by reason of overriding nearby character spaces by some characters
+row1 =  ur""" ┌┐└┘│─    ♂♀ ♬☼""" 
+row2 =  ur"""┼◀↕‼ ┴┬┤↑├→←    """
+'''
 
-#row1 =  u" ┌┐└┘│─    ♂♀ ♬☼" # Temporarily removed by reason of overriding nearby character spaces by some characters
-#row2 =  u"┼◀↕‼ ┴┬┤↑├→←    "
+row1 =  ur"""           ♂♀ ♬☼"""
+row2 =  ur""" ◀↕‼    ↑ →←    """
+row3 =  ur""" !"#$%&'()*+,-./"""
+row4 =  ur"""0123456789:;<=>?"""
+row5 =  ur"""@ABCDEFGHIJKLMNO"""
+row6 =  ur"""PQRSTUVWXYZ[\]^_"""
+row7 =  ur"""`abcdefghijklmno"""
+row8 =  ur"""pqrstuvwxyz{|}~ """
+row9 =  ur"""€ ‚ƒ„…†‡ˆ‰Š‹Œ Ž """
+row10 = ur""" ‘’“”•–—˜™š›œ žŸ"""
+row11 = ur""" ¡¢£¤¥¦§¨©ª«¬ ®¯"""
+row12 = ur"""°±²³´µ¶·¸¹º»¼½¾¿"""
+row13 = ur"""ÀÁÂÃÄÅ°ÆÇÈÉÊËÌÍÎ"""
+row14 = ur"""ÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß"""
+row15 = ur"""àáâãäå±æçèéêëìíî"""
+row16 = ur"""ðñòóôõö÷øùúûüýþÿ"""
 
-row1 =  u"           ♂♀ ♬☼"
-row2 =  u" ◀↕‼    ↑ →←    "
-row3 =  u" !\"#$%&\'()*+,-./"
-row4 =  u"0123456789:;<=>?"
-row5 =  u"@ABCDEFGHIJKLMNO"
-row6 =  u"PQRSTUVWXYZ[\\]^_"
-row7 =  u"`abcdefghijklmno"
-row8 =  u"pqrstuvwxyz{|}~ "
-row9 =  u"€ ‚ƒ„…†‡ˆ‰Š‹Œ Ž "
-row10 = u" ‘’“”•–—˜™š›œ žŸ"
-row11 = u" ¡¢£¤¥¦§¨©ª«¬­®¯"
-row12 = u"Ёё²³´µ¶·¸¹º»¼½¾¿"
-row13 = u"АБВГДЕЖЗИЙКЛМНОП"
-row14 = u"РСТУФХЦЧШЩЪЫЬЭЮЯ"
-row15 = u"абвгдежзийклмноп"
-row16 = u"рстуфхцчшщъыьэюя"
+codepage = row1 + row2 + row3 + row4 + row5 + row6 + row7 + row8 + row9 + row10 + row11 + row12 + row13 + row14 + row15 + row16
 
 from PIL import Image, ImageDraw, ImageFont
+
+# Function for drawing fonts
 
 def paint_font_grid(input_string, font_path, output_file, image_mode):
 
@@ -105,12 +110,25 @@ def paint_font_grid(input_string, font_path, output_file, image_mode):
     else:
         my_image.save(output_file)
 
-string = row1 + row2 + row3 + row4 + row5 + row6 + row7 + row8 + row9 + row10 + row11 + row12 + row13 + row14 + row15 + row16
+# Taking replace pattern strings
 
-paint_font_grid(string, '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', "catalogue.bmp", "L")
-paint_font_grid(string, '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', "verdana.bmp", "L")
-paint_font_grid(string, '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', "verdana-bold.bmp", "L")
-paint_font_grid(string, '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', "verdana-bold-outlined.png", "L") # Python PIL library dont support alpha channel for BMP format
+with open("replace_pattern.txt") as my_replace_pattern_file:
+    iso8859_replacement, custom_alphabet = my_replace_pattern_file.readlines()
+
+iso8859_replacement = iso8859_replacement.rstrip().decode("utf-8")
+custom_alphabet = custom_alphabet.rstrip().decode("utf-8")
+
+# Replacing characters in codepage
+
+for i, j in zip(custom_alphabet, iso8859_replacement):
+    codepage = codepage.replace(i, j)
+
+# Painting fonts
+
+paint_font_grid(codepage, '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', "catalogue.bmp", "L")
+paint_font_grid(codepage, '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', "verdana.bmp", "L")
+paint_font_grid(codepage, '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', "verdana-bold.bmp", "L")
+paint_font_grid(codepage, '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', "verdana-bold-outlined.png", "L") # Python PIL library dont support alpha channel for BMP format
 
 # Code remains
 

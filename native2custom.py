@@ -18,14 +18,11 @@ as the name is changed.
 
 '''
 
-# Version 0.0.2
+# Version 0.0.3
 
 import argparse
 
 # This is replace pattern below
-
-iso8859_replacement =  u"ÀÁÂÃÄÅ°ÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäå±æçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
-russian_alphabet =     u"АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя"
 
 my_argument_parser = argparse.ArgumentParser()
 my_argument_parser.add_argument("input_file")
@@ -34,12 +31,18 @@ my_arguments = my_argument_parser.parse_args()
 my_input_file = open(my_arguments.input_file)
 my_output_file = open("base-language.txt.custom", "w")
 
+with open("replace_pattern.txt") as my_replace_pattern_file:
+    iso8859_replacement, custom_alphabet = my_replace_pattern_file.readlines()
+
+iso8859_replacement = iso8859_replacement.rstrip().decode("utf-8")
+custom_alphabet = custom_alphabet.rstrip().decode("utf-8")
+
 my_output_file.write("\xef\xbb\xbf\r\n") # \xef\xbb\xbf - zero width no-break space. Game crash without it
 
 for entry in my_input_file:
     entry_unicode = entry.decode("utf-8")
-    for i, j in zip(russian_alphabet, iso8859_replacement):
-        entry_unicode = entry_unicode.replace(i, j)
+    for i, j in zip(custom_alphabet, iso8859_replacement):
+        entry_unicode = entry_unicode.replace(j, i)
     my_output_file.write(entry_unicode.encode("utf-8"))
 
 my_input_file.close()
