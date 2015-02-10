@@ -9,7 +9,6 @@ With these tools you can make your own translation more easily without much hand
 0. Download all scripts from this repository and put them in folder.
 0. Open in text editor replace_pattern.txt.
 0. Write in first line all characters from your alphabet in upper and lower case.
-0. Write in second line different characters not used by game to make both lines same length (you can look for available characters in /data/<game folder>/data/fonts/verdana.bmp).
 0. Save and close replace_pattern.txt.
 0. Run: python makefont.py
 0. Run: python po2prison.py prison_architect.po
@@ -51,13 +50,13 @@ Usage: python prison2pot.py base-language.txt
 
 Dependencies: Python Polib library
 
-Description: It have no currently usage for translating participants. I used it to create Gettext template from <game folder>/data/language/base-language.txt and upload it on Zanata.org.
+Description: It convert original file base-language.txt to Gettext template file. I used it to create Gettext template from <game folder>/data/language/base-language.txt and upload it on Zanata.org.
 
 ## Additional information
 
 .po file is Gettext format file for helping translators. It is actually .txt format, but it have structured information about translated strings. It may be easily edited. I recommend use Poedit editor (google it). But Gettext is not native format for Prison Architect and i use my own python scripts to convert translated prison_architect.po file to <game folder>/data/language/base-language.txt.
 
-Possible game files structure is:
+If your game files structure is:
 
 * lib
 * lib64
@@ -66,7 +65,7 @@ Possible game files structure is:
 * PrisonArchitect.x86_64
 * sounds.dat
 
-Then you need to unpack main.dat (it is actually a RAR archive) in game folder and rename main.dat to main1.dat (game will load unpacked data).
+Then you need to unpack main.dat (it is actually a RAR archive) in game folder and rename main.dat to main1.dat (to make game not able to see this file).
 
 Bitmap font parameters:
 
@@ -79,7 +78,7 @@ GIMP export options: do not save colors, not run-length encoded.
 
 ## Story (>ლ)
 
-Following information from website of ImageMagick.
+Following information about BMP3 with transparency from website of ImageMagick.
 
 > I've installed Xnview and it does indicate that a BMP3 file that I created with nconvert has transparency. So, I looked at a hexdump of the file.
 > The BMP3 file header indicates that the image has 32-bits per pixel. Nconvert has used the high byte of each DWORD to indicate the opacity of the pixel. If it is zero, the pixel is transparent and if it is 255 the pixel is fully opaque. I haven't tried to sort out whether Nconvert will produce a BMP3 with partially transparent pixels nor whether Xnview could display one properly.

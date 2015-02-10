@@ -18,18 +18,16 @@ as the name is changed.
 
 '''
 
-# Version 0.0.3
+# Version 0.0.4
 
 # This is Prison Architect version of ISO 8859-1 Latin codepage
 
-'''
-# Those temporarily removed by reason of overriding nearby character spaces by some characters
-row1 =  ur""" ┌┐└┘│─    ♂♀ ♬☼""" 
-row2 =  ur"""┼◀↕‼ ┴┬┤↑├→←    """
-'''
+#row1 =  ur""" ┌┐└┘│─    ♂♀ ♬☼""" 
+#row2 =  ur"""┼◀↕‼ ┴┬┤↑├→←    """
 
 row1 =  ur"""           ♂♀ ♬☼"""
 row2 =  ur""" ◀↕‼    ↑ →←    """
+
 row3 =  ur""" !"#$%&'()*+,-./"""
 row4 =  ur"""0123456789:;<=>?"""
 row5 =  ur"""@ABCDEFGHIJKLMNO"""
@@ -110,18 +108,19 @@ def paint_font_grid(input_string, font_path, output_file, image_mode):
     else:
         my_image.save(output_file)
 
-# Taking replace pattern strings
+# Taking characters of native alphabet and not used game characters
 
 with open("replace_pattern.txt") as my_replace_pattern_file:
-    iso8859_replacement, custom_alphabet = my_replace_pattern_file.readlines()
-
-iso8859_replacement = iso8859_replacement.rstrip().decode("utf-8")
+    custom_alphabet, iso8859_replacement = my_replace_pattern_file.readlines()
 custom_alphabet = custom_alphabet.rstrip().decode("utf-8")
+iso8859_replacement = iso8859_replacement.rstrip().decode("utf-8")[:len(custom_alphabet)]
+if len(iso8859_replacement) < len(custom_alphabet):
+    raise ValueError("Too small second line in replace_pattern.txt")
 
 # Replacing characters in codepage
 
 for i, j in zip(custom_alphabet, iso8859_replacement):
-    codepage = codepage.replace(i, j)
+    codepage = codepage.replace(j, i)
 
 # Painting fonts
 
