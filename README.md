@@ -1,12 +1,36 @@
 # pa-translate
 
-With these tools you can make your own translation more easily without much handwork. 
+## Introduction
 
-## How-to
+This is python project with scripts, that will help translate other program, that uses bitmap fonts without characters for your native language.
 
-0. Download ready to use translated prison_architect.po files from [Prison Architect translation project on Zanata.org][zanata-project]. You may be need to [sign up][zanata-sign-up], [join a language][zanata-join-language] and HELP translate game to your native language (you can contact [David Mason][github-davidmason] on Zanata team if you need help).
+## How-to (if you want only to participate in translation)
+
+Note: If you have account on Zanata.org, then you need [sign up][zanata-sign-up].
+
+0. Log In on [Zanata website][zanata-website].
+0. [Join a language][zanata-join-language].
+0. Open [Prison Architect translation project page][zanata-prison].
+0. Choose latest version.
+0. Choose your language.
+0. Choose prison_architect document.
+0. Begin translating.
+
+For more help contact [David Mason][github-davidmason] on Zanata team.
+
+## How-to (if you want to develop your own translation)
+
+Note: If you have account on Zanata.org, then you need [sign up][zanata-sign-up].
+
+0. Log In on [Zanata website][zanata-website].
+0. Open [Prison Architect translation project page][zanata-prison].
+0. Choose latest version.
+0. Choose your language.
+0. Choose prison_architect document.
+0. Choose documents option in right upper corner.
+0. Download prison_architect.po file.
 0. Install Python, Python PIL library, Python Polib library (Python version 2.7.8 or near).
-0. Download all scripts from this repository and put them in folder.
+0. Download all scripts from this repository and put them in work folder.
 0. Open in text editor replace_pattern.txt.
 0. Write in first line all characters from your alphabet in upper and lower case.
 0. Save and close replace_pattern.txt.
@@ -16,9 +40,26 @@ With these tools you can make your own translation more easily without much hand
 0. Open verdana-bold-outline.png and save as verdana-bold-outline.bmp (BMP version 3 and type GrayscaleAlpha).
 0. Replace original game fonts here "<game folder>/data/fonts/" with new one from work folder.
 0. Replace original game translation here "<game folder>/data/language/" with new one from work folder (you also need to rename base-language.txt.custom to base-language.txt).
-0. Run game.
 
-For more detailed description read below.
+For more help contact [David Mason][github-davidmason] on Zanata team.
+
+## How-to (if you want to develop your own translation without using Zanata)
+
+0. Install Python, Python PIL library, Python Polib library (Python version 2.7.8 or near).
+0. Download all scripts from this repository and put them in work folder.
+0. Put base-language.txt from "<game folder>/data/language/" into work folder.
+0. Run: python prison2pot.py base-language.txt
+0. Open prison_architect.pot with good text editor (i highly recommend use [Poedit][poedit]).
+0. Translate all entries and save as prison_architect.po.
+0. Open in text editor replace_pattern.txt.
+0. Write in first line all characters from your alphabet in upper and lower case.
+0. Save and close replace_pattern.txt.
+0. Run: python makefont.py
+0. Run: python po2prison.py prison_architect.po
+0. Run: python native2custom.py base-language.txt.native
+0. Open verdana-bold-outline.png and save as verdana-bold-outline.bmp (BMP version 3 and type GrayscaleAlpha).
+0. Replace original game fonts here "<game folder>/data/fonts/" with new one from work folder.
+0. Replace original game translation here "<game folder>/data/language/" with new one from work folder (you also need to rename base-language.txt.custom to base-language.txt).
 
 ## po2prison.py
 
@@ -54,8 +95,9 @@ Description: It convert original file base-language.txt to Gettext template file
 
 ## Links
 
-[Translation project on Zanata website][zanata-project]
-[Russian translation for Steam version of Prison Architect][russian-translation-steam]
+* [Prison Architect on Zanata website][zanata-prison]
+* [Russian translation for Steam version of Prison Architect][russian-translation-steam]
+* [Poedit translation editor][poedit]
 
 ## Additional information
 
@@ -93,7 +135,9 @@ Following information about BMP3 with transparency from website of ImageMagick.
 
 by el_supremo
 
-[zanata-project]: https://translate.zanata.org/zanata/project/view/pa
+[poedit]: http://poedit.net/
+[zanata-website]: https://translate.zanata.org/zanata/
+[zanata-prison]: https://translate.zanata.org/zanata/project/view/pa
 [zanata-sign-up]: http://zanata.org/help/accounts/sign-up/
 [zanata-join-language]: http://zanata.org/help/translation/translator-add/
 [github-davidmason]: https://github.com/davidmason/
