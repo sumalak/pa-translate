@@ -6,7 +6,7 @@ This is python project with scripts, that will help translate other program, tha
 
 ## How-to (if you want only to participate in translation)
 
-Note: If you have account on Zanata.org, then you need [sign up][zanata-sign-up].
+Note: If you dont have account on Zanata.org, then you need [sign up][zanata-sign-up].
 
 0. Log In on [Zanata website][zanata-website].
 0. [Join a language][zanata-join-language].
@@ -20,7 +20,7 @@ For more help contact [David Mason][github-davidmason] on Zanata team.
 
 ## How-to (if you want to develop your own translation)
 
-Note: If you have account on Zanata.org, then you need [sign up][zanata-sign-up].
+Note: If you dont have account on Zanata.org, then you need [sign up][zanata-sign-up].
 
 0. Log In on [Zanata website][zanata-website].
 0. Open [Prison Architect translation project page][zanata-prison].
