@@ -18,21 +18,19 @@ as the name is changed.
 
 '''
 
-# Version 0.0.2
+# Version 0.0.5
 
 import argparse
 import polib
 
-# Pre-part l_ mean that variable is mine (for readability). Not at all.
+my_argument_parser = argparse.ArgumentParser()
+my_argument_parser.add_argument("input_file")
+my_arguments = my_argument_parser.parse_args()
 
-l_Parser = argparse.ArgumentParser()
-l_Parser.add_argument("input_file")
-l_Args = l_Parser.parse_args()
+my_input_file = open(my_arguments.input_file)
+my_output_file = polib.POFile()
 
-l_File_In = open(l_Args.input_file)
-l_File_Out = polib.POFile()
-
-l_File_Out.metadata = {
+my_output_file.metadata = {
     'Project-Id-Version': '1.0',
     'Report-Msgid-Bugs-To': 'you@example.com',
     'POT-Creation-Date': '2007-10-18 14:00+0100',
@@ -44,13 +42,13 @@ l_File_Out.metadata = {
     'Content-Transfer-Encoding': '8bit',
 }
 
-next(l_File_In) # This skip because of some undefined data in begining of file...
+next(my_input_file) # Skip line with byte order mark
 
-line_number = 2 # ...and we skip it in here too.
+line_number = 2
 
 # Lets parse each line, except empty one and comments.
 
-for line in l_File_In:
+for line in my_input_file:
     if not line.strip() or line[0] == "#":
         line_number +=  1
         continue
@@ -58,14 +56,14 @@ for line in l_File_In:
         entry = polib.POEntry(
             msgctxt = line.split(None, 1)[0].rstrip("\r\n"),
             msgid = line.split(None, 1)[-1].rstrip("\r\n").replace("\"", "\\\""),
-            occurrences=[(l_Args.input_file, str(line_number))]
+            occurrences = [(my_arguments.input_file, str(line_number))]
         )
         if line_number != 687: # This statement because of unaccepteable duplicate with 690 line.
-            l_File_Out.append(entry)
+            my_output_file.append(entry)
         line_number += 1
 
-l_File_In.close()
-l_File_Out.save('prison_architect.pot')
+my_input_file.close()
+my_output_file.save('prison_architect.pot')
 
 
 

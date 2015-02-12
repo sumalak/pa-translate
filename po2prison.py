@@ -18,27 +18,27 @@ as the name is changed.
 
 '''
 
-# Version 0.0.2
+# Version 0.0.5
 
 import argparse
 import polib
 
-# Pre-part l_ mean that variable is mine (for readability). Not at all.
+my_argument_parser = argparse.ArgumentParser()
+my_argument_parser.add_argument("input_file")
+my_arguments = my_argument_parser.parse_args()
 
-l_Parser = argparse.ArgumentParser()
-l_Parser.add_argument("input_file")
-l_Args = l_Parser.parse_args()
+my_input_file = polib.pofile(my_arguments.input_file)
+my_output_file = open("base-language.txt.native", "w")
 
-l_File_Out = open("base-language.txt.native", "w")
-l_File_In = polib.pofile(l_Args.input_file)
+my_output_file.write("\xef\xbb\xbf\r\n") # Line with byte order mark. Game crash without it
 
-for entry in l_File_In:
+for entry in my_input_file:
     if entry.msgstr:
-        l_File_Out.write(entry.msgctxt.ljust(53).encode("utf-8") + entry.msgstr.encode("utf-8") + "\r\n")
+        my_output_file.write(entry.msgctxt.ljust(53).encode("utf-8") + entry.msgstr.encode("utf-8") + "\r\n")
     else:
-        l_File_Out.write(entry.msgctxt.ljust(53).encode("utf-8") + entry.msgid.encode("utf-8") + "\r\n")
+        my_output_file.write(entry.msgctxt.ljust(53).encode("utf-8") + entry.msgid.encode("utf-8") + "\r\n")
 
-l_File_Out.close()
+my_output_file.close()
 
 
 

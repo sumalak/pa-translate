@@ -18,7 +18,7 @@ as the name is changed.
 
 '''
 
-# Version 0.0.4
+# Version 0.0.5
 
 # This is Prison Architect version of ISO 8859-1 Latin codepage
 

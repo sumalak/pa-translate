@@ -18,7 +18,7 @@ as the name is changed.
 
 '''
 
-# Version 0.0.4
+# Version 0.0.5
 
 import argparse
 
@@ -39,8 +39,6 @@ if len(iso8859_replacement) < len(custom_alphabet):
 
 my_input_file = open(my_arguments.input_file)
 my_output_file = open("base-language.txt.custom", "w")
-
-my_output_file.write("\xef\xbb\xbf\r\n") # Line with byte order mark. Game crash without it
 
 # Parsing characters of each string
 
