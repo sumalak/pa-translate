@@ -52,6 +52,11 @@ Dependencies: Python Polib library
 
 Description: It convert original file base-language.txt to Gettext template file. I used it to create Gettext template from <game folder>/data/language/base-language.txt and upload it on Zanata.org.
 
+## Links
+
+[Translation project on Zanata website][zanata-project]
+[Russian translation for Steam version of Prison Architect][russian-translation-steam]
+
 ## Additional information
 
 .po file is Gettext format file for helping translators. It is actually .txt format, but it have structured information about translated strings. It may be easily edited. I recommend use Poedit editor (google it). But Gettext is not native format for Prison Architect and i use my own python scripts to convert translated prison_architect.po file to <game folder>/data/language/base-language.txt.
@@ -92,3 +97,4 @@ by el_supremo
 [zanata-sign-up]: http://zanata.org/help/accounts/sign-up/
 [zanata-join-language]: http://zanata.org/help/translation/translator-add/
 [github-davidmason]: https://github.com/davidmason/
+[russian-translation-steam]: http://steamcommunity.com/sharedfiles/filedetails/?id=390281765
