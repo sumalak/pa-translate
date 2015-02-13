@@ -18,7 +18,7 @@ as the name is changed.
 
 '''
 
-# Version 0.0.5
+# Version 0.0.6
 
 import argparse
 import polib
@@ -28,7 +28,7 @@ my_argument_parser.add_argument("input_file")
 my_arguments = my_argument_parser.parse_args()
 
 my_input_file = open(my_arguments.input_file)
-my_output_file = polib.POFile()
+my_output_file = polib.POFile(check_for_duplicates=True)
 
 my_output_file.metadata = {
     'Project-Id-Version': '1.0',
@@ -42,14 +42,17 @@ my_output_file.metadata = {
     'Content-Transfer-Encoding': '8bit',
 }
 
-next(my_input_file) # Skip line with byte order mark
+next(my_input_file) # Skip line with byte order mark.
 
 line_number = 2
 
 # Lets parse each line, except empty one and comments.
 
 for line in my_input_file:
-    if not line.strip() or line[0] == "#":
+    if line_number == 687: # This statement because of unaccepteable duplicate with 690 line.
+        line_number +=  1
+        continue
+    elif not line.strip() or line[0] == "#":
         line_number +=  1
         continue
     else:
@@ -58,12 +61,14 @@ for line in my_input_file:
             msgid = line.split(None, 1)[-1].rstrip("\r\n").replace("\"", "\\\""),
             occurrences = [(my_arguments.input_file, str(line_number))]
         )
-        if line_number != 687: # This statement because of unaccepteable duplicate with 690 line.
-            my_output_file.append(entry)
+        my_output_file.append(entry)
         line_number += 1
 
 my_input_file.close()
 my_output_file.save('prison_architect.pot')
+
+
+
 
 
 
