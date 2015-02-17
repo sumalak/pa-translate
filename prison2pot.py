@@ -18,16 +18,17 @@ as the name is changed.
 
 '''
 
-# Version 0.0.6
+# Version 0.0.7
 
 import argparse
 import polib
+import codecs
 
 my_argument_parser = argparse.ArgumentParser()
 my_argument_parser.add_argument("input_file")
 my_arguments = my_argument_parser.parse_args()
 
-my_input_file = open(my_arguments.input_file)
+my_input_file = codecs.open(my_arguments.input_file, "r", "utf-8-sig")
 my_output_file = polib.POFile(check_for_duplicates=True)
 
 my_output_file.metadata = {
