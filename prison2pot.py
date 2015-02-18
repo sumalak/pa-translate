@@ -18,7 +18,7 @@ as the name is changed.
 
 '''
 
-# Version 0.0.7
+# Version 0.0.8
 
 import argparse
 import polib
@@ -47,23 +47,17 @@ next(my_input_file) # Skip line with byte order mark.
 
 line_number = 2
 
-# Lets parse each line, except empty one and comments.
+duplicates = [690] # Example: duplicates = [1, 5, 6]
 
 for line in my_input_file:
-    if line_number == 687: # This statement because of unaccepteable duplicate with 690 line.
-        line_number +=  1
-        continue
-    elif not line.strip() or line[0] == "#":
-        line_number +=  1
-        continue
-    else:
+    if not (not line.strip() or line[0] == "#") and line_number not in duplicates: # Skip empty lines, comments and duplicates.
         entry = polib.POEntry(
-            msgctxt = line.split(None, 1)[0].rstrip("\r\n"),
-            msgid = line.split(None, 1)[-1].rstrip("\r\n").replace("\"", "\\\""),
-            occurrences = [(my_arguments.input_file, str(line_number))]
+            msgctxt = line.split(None, 1)[0].rstrip("\r\n"),                     # Taking first part of string.
+            msgid = line.split(None, 1)[1].rstrip("\r\n").replace("\"", "\\\""), # Taking second part of string.
+            occurrences = [(my_arguments.input_file, str(line_number))]          # Taking number of string.
         )
         my_output_file.append(entry)
-        line_number += 1
+    line_number += 1
 
 my_input_file.close()
 my_output_file.save('prison_architect.pot')
