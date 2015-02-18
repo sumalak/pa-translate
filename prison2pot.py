@@ -18,7 +18,7 @@ as the name is changed.
 
 '''
 
-# Version 0.0.8
+# Version 0.0.9
 
 import argparse
 import polib
@@ -50,7 +50,7 @@ line_number = 2
 duplicates = [690] # Example: duplicates = [1, 5, 6]
 
 for line in my_input_file:
-    if not (not line.strip() or line[0] == "#") and line_number not in duplicates: # Skip empty lines, comments and duplicates.
+    if line.strip() and line[0] != "#" and line_number not in duplicates: # Skip empty lines, comments and duplicates.
         entry = polib.POEntry(
             msgctxt = line.split(None, 1)[0].rstrip("\r\n"),                     # Taking first part of string.
             msgid = line.split(None, 1)[1].rstrip("\r\n").replace("\"", "\\\""), # Taking second part of string.
