@@ -43,9 +43,7 @@ my_output_file.metadata = {
     'Content-Transfer-Encoding': '8bit',
 }
 
-next(my_input_file) # Skip line with byte order mark.
-
-line_number = 2
+line_number = 1
 
 duplicates = [690] # Example: duplicates = [1, 5, 6]
 
