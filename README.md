@@ -2,7 +2,9 @@
 
 ## Introduction
 
-This is python project with scripts, that will help translate other program, that uses bitmap fonts without characters for your native language.
+This is python project with scripts, that will help translate applications, that use bitmap fonts (image with map of characters) and language strings in any simple text file (like base-language.txt in Prison Architect).
+
+Why use this? Answer is simple: Gettext format allow you easy manage all language strings of application and collaborate with other translators on Zanata.org (and other collaborative translation websites/systems). When new version of Prison Architect arrives you need to manually manipulate with game language files, compare difference, transfer translations. With Gettext, Python and these scripts our task become trivial.
 
 ## How-to (if you want only to participate in translation)
 
@@ -34,9 +36,9 @@ Note: If you dont have account on Zanata.org, then you need [sign up][zanata-sig
 0. Open in text editor replace_pattern.txt.
 0. Write in first line all characters from your alphabet in upper and lower case.
 0. Save and close replace_pattern.txt.
-0. Run: python makefont.py
-0. Run: python po2prison.py prison_architect.po
-0. Run: python native2custom.py base-language.txt.native
+0. Run from command line: python makefont.py
+0. Run from command line: python po2prison.py prison_architect.po
+0. Run from command line: python native2custom.py base-language.txt.native
 0. Open verdana-bold-outline.png and save as verdana-bold-outline.bmp (BMP version 3 and type GrayscaleAlpha).
 0. Replace original game fonts here "<game folder>/data/fonts/" with new one from work folder.
 0. Replace original game translation here "<game folder>/data/language/" with new one from work folder (you also need to rename base-language.txt.custom to base-language.txt).
@@ -54,9 +56,9 @@ For more help contact [David Mason][github-davidmason] on Zanata team.
 0. Open in text editor replace_pattern.txt.
 0. Write in first line all characters from your alphabet in upper and lower case.
 0. Save and close replace_pattern.txt.
-0. Run: python makefont.py
-0. Run: python po2prison.py prison_architect.po
-0. Run: python native2custom.py base-language.txt.native
+0. Run from command line: python makefont.py
+0. Run from command line: python po2prison.py prison_architect.po
+0. Run from command line: python native2custom.py base-language.txt.native
 0. Open verdana-bold-outline.png and save as verdana-bold-outline.bmp (BMP version 3 and type GrayscaleAlpha).
 0. Replace original game fonts here "<game folder>/data/fonts/" with new one from work folder.
 0. Replace original game translation here "<game folder>/data/language/" with new one from work folder (you also need to rename base-language.txt.custom to base-language.txt).
