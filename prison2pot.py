@@ -45,7 +45,7 @@ my_output_file.metadata = {
 
 line_number = 1
 
-duplicates = [690] # Example: duplicates = [1, 5, 6]
+duplicates = [693] # Example: duplicates = [1, 5, 6]
 
 for line in my_input_file:
     if line.strip() and line[0] != "#" and line_number not in duplicates: # Skip empty lines, comments and duplicates.
