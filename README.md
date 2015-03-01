@@ -20,6 +20,23 @@ Note: If you dont have account on Zanata.org, then you need [sign up][zanata-sig
 
 For more help contact [David Mason][github-davidmason] on Zanata team.
 
+Note: if you have your own translation, you can help project and upload it on [Zanata website][zanata-website] by following steps:
+
+0. Install Python, Python PIL library, Python Polib library (Python version 2.7.8 or near).
+0. Put in work folder original base-language.txt.
+0. Run from command line: python prison2pot.py base-language.txt
+0. Put in work folder translated base-language.txt. Important: your translated base-language.txt must contain native language characters (german, french, spain etc.).
+0. Run from command line: python prison2po.py prison_architect.pot base-language.txt
+0. Log In on [Zanata website][zanata-website].
+0. [Join a language][zanata-join-language].
+0. Open [Prison Architect translation project page][zanata-prison].
+0. Choose latest version.
+0. Choose your language.
+0. Choose prison_architect document.
+0. Choose documents option in right upper corner.
+0. Choose upload action of prison_architect document.
+0. Upload prison_architect.po file.
+
 ## How-to (if you want to develop your own translation)
 
 Note: If you dont have account on Zanata.org, then you need [sign up][zanata-sign-up].
@@ -30,7 +47,8 @@ Note: If you dont have account on Zanata.org, then you need [sign up][zanata-sig
 0. Choose your language.
 0. Choose prison_architect document.
 0. Choose documents option in right upper corner.
-0. Download prison_architect.po file.
+0. Choose download action of prison_architect document.
+0. Put downloaded prison_architect.po in work folder.
 0. Install Python, Python PIL library, Python Polib library (Python version 2.7.8 or near).
 0. Download all scripts from this repository and put them in work folder.
 0. Open in text editor replace_pattern.txt.
@@ -93,7 +111,15 @@ Usage: python prison2pot.py base-language.txt
 
 Dependencies: Python Polib library
 
-Description: It convert original file base-language.txt to Gettext template file. I used it to create Gettext template from <game folder>/data/language/base-language.txt and upload it on Zanata.org.
+Description: It convert original file base-language.txt to Gettext template file.
+
+## prison2po.py
+
+Usage: python prison2po.py prison_architect.pot base-language.txt
+
+Dependencies: Python Polib library
+
+Description: It convert translated file base-language.txt to Gettext catalog file.
 
 ## Links
 

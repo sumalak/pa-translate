@@ -22,13 +22,13 @@ as the name is changed.
 
 import argparse
 
-# This is replace pattern below
+# This is replace pattern below.
 
 my_argument_parser = argparse.ArgumentParser()
 my_argument_parser.add_argument("input_file")
 my_arguments = my_argument_parser.parse_args()
 
-# Taking characters of native alphabet and not used game characters
+# Taking characters of native alphabet and not used game characters.
 
 with open("replace_pattern.txt") as my_replace_pattern_file:
     custom_alphabet, iso8859_replacement = my_replace_pattern_file.readlines()
@@ -40,7 +40,7 @@ if len(iso8859_replacement) < len(custom_alphabet):
 my_input_file = open(my_arguments.input_file)
 my_output_file = open("base-language.txt.custom", "w")
 
-# Parsing characters of each string
+# Parsing characters of each string.
 
 for entry in my_input_file:
     entry_unicode = entry.decode("utf-8")
