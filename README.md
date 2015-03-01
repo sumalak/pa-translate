@@ -23,6 +23,7 @@ For more help contact [David Mason][github-davidmason] on Zanata team.
 Note: if you have your own translation, you can help project and upload it on [Zanata website][zanata-website] by following steps:
 
 0. Install Python, Python PIL library, Python Polib library (Python version 2.7.8 or near).
+0. Download all scripts from this repository and put them in work folder.
 0. Put in work folder original base-language.txt.
 0. Run from command line: python prison2pot.py base-language.txt
 0. Put in work folder translated base-language.txt. Important: your translated base-language.txt must contain native language characters (german, french, spain etc.).
