@@ -18,7 +18,7 @@ as the name is changed.
 
 '''
 
-# Version 0.0.9
+# Version 0.0.10
 
 import argparse
 import polib
@@ -49,10 +49,16 @@ duplicates = [693] # Example: duplicates = [1, 5, 6]
 
 for line in my_input_file:
     if line.strip() and line[0] != "#" and line_number not in duplicates: # Skip empty lines, comments and duplicates.
+        line = line.rstrip("\r\n").split(None, 1)
+        po_context = line[0] # Taking first part of string.
+        if len(line) > 1:
+            po_id = line[1] # Taking second part of string (if exists).
+        else:
+            po_id = ""
         entry = polib.POEntry(
-            msgctxt = line.split(None, 1)[0].rstrip("\r\n"),                     # Taking first part of string.
-            msgid = line.split(None, 1)[1].rstrip("\r\n").replace("\"", "\\\""), # Taking second part of string.
-            occurrences = [(my_arguments.input_file, str(line_number))]          # Taking number of string.
+            msgctxt = po_context,                     
+            msgid = po_id.replace("\"", "\\\""), 
+            occurrences = [(my_arguments.input_file, str(line_number))] # Taking number of string.
         )
         my_output_file.append(entry)
     line_number += 1
