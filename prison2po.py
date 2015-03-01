@@ -18,7 +18,7 @@ as the name is changed.
 
 '''
 
-# Version 0.0.1
+# Version 0.0.2
 
 import argparse
 import polib
@@ -67,20 +67,16 @@ for line in my_input_translated_file:
 # Go over Gettext template file and append translated strings.
 
 for entry in my_input_pot_file:
-    for key, value in dictionary.iteritems():
-        if entry.msgctxt == key:  # If Gettext context is equal to first part of string.
-            translated_entry = polib.POEntry(
-                msgctxt = entry.msgctxt,
-                msgid = entry.msgid,
-                msgstr = value,  # Second (translated) part of string.
-                occurrences = entry.occurrences
-            )
-            my_output_file.append(translated_entry)
-            break
-
+    translated_entry = polib.POEntry(
+        msgctxt = entry.msgctxt,
+        msgid = entry.msgid,
+        msgstr = dictionary.get(entry.msgctxt, ""),  # Translated string.
+        occurrences = entry.occurrences
+    )
+    my_output_file.append(translated_entry)
 
 my_input_translated_file.close()
-my_output_file.save('prison_architect_generated.po')
+my_output_file.save("prison_architect_generated.po")
 
 
 
