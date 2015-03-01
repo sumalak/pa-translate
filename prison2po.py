@@ -67,7 +67,6 @@ for line in my_input_translated_file:
 # Go over Gettext template file and append translated strings.
 
 for entry in my_input_pot_file:
-    my_input_translated_file.seek(0)
     for key, value in dictionary.iteritems():
         if entry.msgctxt == key:  # If Gettext context is equal to first part of string.
             translated_entry = polib.POEntry(
