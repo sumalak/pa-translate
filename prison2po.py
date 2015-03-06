@@ -18,19 +18,20 @@ as the name is changed.
 
 '''
 
-# Version 0.0.2
+# Version 0.0.3
 
 import argparse
 import polib
 import codecs
+import re
 
 my_argument_parser = argparse.ArgumentParser()
-my_argument_parser.add_argument("input_pot_file")
-my_argument_parser.add_argument("input_translated_file")
+my_argument_parser.add_argument("txt", help="Translated base-language.txt file with original characters")
+my_argument_parser.add_argument("pot", help="Gettext template file created with prisont2pot.py")
 my_arguments = my_argument_parser.parse_args()
 
-my_input_pot_file = polib.pofile(my_arguments.input_pot_file)                                 # Taking Gettext template.
-my_input_translated_file = codecs.open(my_arguments.input_translated_file, "r", "utf-8-sig")  # Taking translated base-language.txt.
+my_input_pot_file = polib.pofile(my_arguments.pot)                          # Taking Gettext template.
+my_input_translated_file = codecs.open(my_arguments.txt, "r", "utf-8-sig")  # Taking translated base-language.txt.
 my_output_file = polib.POFile()
 
 my_output_file.metadata = {
@@ -45,45 +46,45 @@ my_output_file.metadata = {
     'Content-Transfer-Encoding': '8bit',
 }
 
-#d = {key: value for key, value in iterable}
+# d = {key: value for key, value in iterable}
 
 line_number = 1
 
 dictionary = {}
 
+regexp = re.compile('([^#]\S+) +(.+)')  # Not #, more than zero non-whitespace, more than zero space, more than zero non-whitespace.
+
 # Putting translated file into key:value dictionary.
 
 for line in my_input_translated_file:
-    if line.strip() and line[0] != "#":  # Skip empty lines, comments.
-        line = line.rstrip("\r\n").split(None, 1)
+    substring = regexp.match(line)
+    if substring:
+        line = substring.group(1, 2)
         if len(line) > 1:  # Do line have two values.
-            key = line[0]
-            value = line[1].replace("\"", "\\\"")
-            dictionary[key] = value
+            dictionary[line[0]] = line[1].replace("\"", "\\\"")
         else:
-            print "Only one value in line", line_number  # Printing number of line with only one value.
+            print "Error! Only one value in line", line_number  # Printing number of line with only one value.
     line_number += 1
 
 # Go over Gettext template file and append translated strings.
 
 for entry in my_input_pot_file:
     translated_entry = polib.POEntry(
-        msgctxt = entry.msgctxt,
-        msgid = entry.msgid,
-        msgstr = dictionary.get(entry.msgctxt, ""),  # Translated string.
-        occurrences = entry.occurrences
+        msgctxt=entry.msgctxt,
+        msgid=entry.msgid,
+        msgstr=dictionary.get(entry.msgctxt, ""),  # Translated string.
+        occurrences=entry.occurrences
     )
     my_output_file.append(translated_entry)
 
+'''
+# For testing purpose.
+
+for line in my_input_translated_file:
+    substring = regexp.match(line)
+    if substring:
+        print substring.group(1, 2)
+'''
+
 my_input_translated_file.close()
 my_output_file.save("prison_architect_generated.po")
-
-
-
-
-
-
-
-
-
-
