@@ -18,17 +18,18 @@ as the name is changed.
 
 '''
 
-# Version 0.0.11
+# Version 0.0.12
 
 import argparse
 import polib
 import codecs
+import re
 
 my_argument_parser = argparse.ArgumentParser()
-my_argument_parser.add_argument("input_file")
+my_argument_parser.add_argument("txt", help="Original base-language.txt")
 my_arguments = my_argument_parser.parse_args()
 
-my_input_file = codecs.open(my_arguments.input_file, "r", "utf-8-sig")
+my_input_file = codecs.open(my_arguments.txt, "r", "utf-8-sig")
 my_output_file = polib.POFile(check_for_duplicates=True)
 
 my_output_file.metadata = {
@@ -47,18 +48,22 @@ line_number = 1
 
 duplicates = [693]  # Example: duplicates = [1, 5, 6]
 
+regexp = re.compile('([a-z_]+) +([\S ]+)')  # One or more a-z or underline, one or more space, one or more non-whitespace or space.
+
 for line in my_input_file:
-    if line.strip() and line[0] != "#" and line_number not in duplicates:  # Skip empty lines, comments and duplicates.
-        line = line.rstrip("\r\n").split(None, 1)
-        if len(line) > 1:  # Do line have two values.
-            entry = polib.POEntry(
-                msgctxt=line[0],                                           # Taking first part of string.
-                msgid=line[1].replace("\"", "\\\""),                       # Taking second part of string.
-                occurrences=[(my_arguments.input_file, str(line_number))]  # Taking number of string.
-            )
-            my_output_file.append(entry)
-        else:
-            print "Only one value in line", line_number  # Printing number of line with only one value.
+    if line_number not in duplicates:  # Skip duplicates.
+        substring = regexp.match(line)
+        if substring:
+            line = substring.group(1, 2)
+            if len(line) > 1:  # Do line have two values.
+                entry = polib.POEntry(
+                    msgctxt=line[0],                                    # Taking first part of string.
+                    msgid=line[1].replace("\"", "\\\""),                # Taking second part of string.
+                    occurrences=[(my_arguments.txt, str(line_number))]  # Taking number of string.
+                )
+                my_output_file.append(entry)
+            else:
+                print "Error! Only one value in line", line_number  # Printing number of line with only one value.
     line_number += 1
 
 my_input_file.close()

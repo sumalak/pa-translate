@@ -18,7 +18,7 @@ as the name is changed.
 
 '''
 
-# Version 0.0.3
+# Version 0.0.4
 
 import argparse
 import polib
@@ -52,14 +52,14 @@ line_number = 1
 
 dictionary = {}
 
-regexp = re.compile('([^#]\S+) +(.+)')  # Not #, more than zero non-whitespace, more than zero space, more than zero non-whitespace.
+regexp = re.compile('([a-z_]+) +([\S ]+)')  # One or more a-z or underline, one or more space, one or more non-whitespace or space.
 
 # Putting translated file into key:value dictionary.
 
 for line in my_input_translated_file:
     substring = regexp.match(line)
     if substring:
-        line = substring.group(1, 2)
+        line = substring.group(1, 2)  # "line =" => "print" for testing.
         if len(line) > 1:  # Do line have two values.
             dictionary[line[0]] = line[1].replace("\"", "\\\"")
         else:
@@ -76,15 +76,6 @@ for entry in my_input_pot_file:
         occurrences=entry.occurrences
     )
     my_output_file.append(translated_entry)
-
-'''
-# For testing purpose.
-
-for line in my_input_translated_file:
-    substring = regexp.match(line)
-    if substring:
-        print substring.group(1, 2)
-'''
 
 my_input_translated_file.close()
 my_output_file.save("prison_architect_generated.po")
