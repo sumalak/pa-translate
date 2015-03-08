@@ -18,14 +18,15 @@ as the name is changed.
 
 '''
 
-# Version 0.0.5
+# Version 0.1.0
 
 import argparse
 
 # This is replace pattern below.
 
 my_argument_parser = argparse.ArgumentParser()
-my_argument_parser.add_argument("input_file")
+my_argument_parser.add_argument("txt", help="Text file with non-english characters")
+my_argument_parser.add_argument("-r", help="Reverse converting", action="store_true")
 my_arguments = my_argument_parser.parse_args()
 
 # Taking characters of native alphabet and not used game characters.
@@ -37,29 +38,22 @@ iso8859_replacement = iso8859_replacement.rstrip().decode("utf-8")[:len(custom_a
 if len(iso8859_replacement) < len(custom_alphabet):
     raise ValueError("Too small second line in replace_pattern.txt")
 
-my_input_file = open(my_arguments.input_file)
-my_output_file = open("base-language.txt.custom", "w")
+my_input_file = open(my_arguments.txt)
+if my_arguments.r:
+    my_output_file = open("base-language.txt.native", "w")
+else:
+    my_output_file = open("base-language.txt.custom", "w")
 
 # Parsing characters of each string.
 
 for entry in my_input_file:
     entry_unicode = entry.decode("utf-8")
     for i, j in zip(custom_alphabet, iso8859_replacement):
-        entry_unicode = entry_unicode.replace(i, j)
+        if my_arguments.r:
+            entry_unicode = entry_unicode.replace(j, i)
+        else:
+            entry_unicode = entry_unicode.replace(i, j)
     my_output_file.write(entry_unicode.encode("utf-8"))
 
 my_input_file.close()
 my_output_file.close()
-
-
-
-
-
-
-
-
-
-
-
-
-

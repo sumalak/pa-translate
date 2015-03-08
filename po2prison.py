@@ -18,7 +18,7 @@ as the name is changed.
 
 '''
 
-# Version 0.0.6
+# Version 0.1.0
 
 import argparse
 import polib
@@ -38,12 +38,3 @@ for entry in my_input_file:
         my_output_file.write(entry.msgctxt.ljust(53) + entry.msgid + "\r\n")
 
 my_output_file.close()
-
-
-
-
-
-
-
-
-

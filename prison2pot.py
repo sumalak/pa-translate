@@ -18,7 +18,7 @@ as the name is changed.
 
 '''
 
-# Version 0.0.12
+# Version 0.1.0
 
 import argparse
 import polib
@@ -68,13 +68,3 @@ for line in my_input_file:
 
 my_input_file.close()
 my_output_file.save('prison_architect.pot')
-
-
-
-
-
-
-
-
-
-

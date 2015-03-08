@@ -18,42 +18,40 @@ as the name is changed.
 
 '''
 
-# Version 0.0.6
+# Version 0.1.0
 
 from PIL import Image, ImageDraw, ImageFont
 
-'''
-row1 = ur""" ┌┐└┘│─    ♂♀ ♬☼"""
-row2 = ur"""┼◀↕‼ ┴┬┤↑├→←    """
-'''
-
 # This is Prison Architect version of ISO 8859-1 Latin codepage.
 
-codepage = [
-    ur"""           ♂♀ ♬☼""",
-    ur""" ◀↕‼    ↑ →←    """,
-    ur""" !"#$%&'()*+,-./""",
-    ur"""0123456789:;<=>?""",
-    ur"""@ABCDEFGHIJKLMNO""",
-    ur"""PQRSTUVWXYZ[\]^_""",
-    ur"""`abcdefghijklmno""",
-    ur"""pqrstuvwxyz{|}~ """,
-    ur"""€ ‚ƒ„…†‡ˆ‰Š‹Œ Ž """,
-    ur""" ‘’“”•–—˜™š›œ žŸ""",
-    ur""" ¡¢£¤¥¦§¨©ª«¬ ®¯""",
-    ur"""°±²³´µ¶·¸¹º»¼½¾¿""",
-    ur"""ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏ""",
-    ur"""ÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß""",
-    ur"""àáâãäåæçèéêëìíîï""",
-    ur"""ðñòóôõö÷øùúûüýþÿ"""]
+'''
+ur""" ┌┐└┘│─    ♂♀ ♬☼"""
+ur"""┼◀↕‼ ┴┬┤↑├→←    """
+'''
 
-codepage = ''.join(codepage)
-
-# Function for drawing fonts.
+codepage = (
+    ur"""           ♂♀ ♬☼"""
+    ur""" ◀↕‼    ↑ →←    """
+    ur""" !"#$%&'()*+,-./"""
+    ur"""0123456789:;<=>?"""
+    ur"""@ABCDEFGHIJKLMNO"""
+    ur"""PQRSTUVWXYZ[\]^_"""
+    ur"""`abcdefghijklmno"""
+    ur"""pqrstuvwxyz{|}~ """
+    ur"""€ ‚ƒ„…†‡ˆ‰Š‹Œ Ž """
+    ur""" ‘’“”•–—˜™š›œ žŸ"""
+    ur""" ¡¢£¤¥¦§¨©ª«¬ ®¯"""
+    ur"""°±²³´µ¶·¸¹º»¼½¾¿"""
+    ur"""ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏ"""
+    ur"""ÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß"""
+    ur"""àáâãäåæçèéêëìíîï"""
+    ur"""ðñòóôõö÷øùúûüýþÿ""")
 
 
 def paint_font_grid(input_string, font_path, output_file, image_mode):
-
+    """
+    Drawing characters in grid.
+    """
     image_width = 1024
     image_height = 1024
     cell_width = image_width / 16    # 64.
@@ -94,8 +92,7 @@ def paint_font_grid(input_string, font_path, output_file, image_mode):
         rect_y1 = 64 * row - 64
         rect_x2 = 64 * col - 1
         rect_y2 = 64 * row - 1
-        my_draw.rectangle([rect_x1, rect_y1, rect_x2, rect_y2],
-                         outline = 255)
+        my_draw.rectangle([rect_x1, rect_y1, rect_x2, rect_y2], outline = text_color)
         '''
 
         if col == 16:
@@ -104,7 +101,7 @@ def paint_font_grid(input_string, font_path, output_file, image_mode):
         else:
             col = col + 1
 
-    #my_image.show() # For testing purpose.
+    #my_image.show()  # For testing purpose.
 
     if output_file == "verdana-bold-outlined.png":
         my_image.save(output_file, transparency=0)

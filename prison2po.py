@@ -18,7 +18,7 @@ as the name is changed.
 
 '''
 
-# Version 0.0.4
+# Version 0.1.0
 
 import argparse
 import polib
