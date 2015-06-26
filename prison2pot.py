@@ -48,7 +48,7 @@ line_number = 1
 
 duplicates = [705]  # 693. Example: duplicates = [1, 5, 6]
 
-regexp = re.compile('([a-z_]+)[\t ]+(.+)\r\n')  # One or more a-z or underline, one or more space, one or more non-whitespace or space.
+regexp = re.compile('([a-z0-9_]+)[\t ]+(.+)\r\n')  # One or more a-z or underline, one or more space, one or more non-whitespace or space.
 
 for line in my_input_file:
     if line_number not in duplicates:  # Skip duplicates.
